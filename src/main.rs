@@ -11,25 +11,26 @@ struct Cli {
 
 #[derive(Subcommand)]
 enum Command {
-    Floor { target_ratio: f64, current: f64 },
+    Best { target_ratio: f64, current: f64 },
 }
 
 fn main() -> Result<(), Box<dyn Error>> {
     let cli = Cli::parse();
 
     match cli.command {
-        Command::Floor {
+        Command::Best {
             target_ratio,
             current,
-        } => calc_floor(target_ratio, current),
+        } => calc_best(target_ratio, current),
     }
 }
 
-fn calc_floor(target_ratio: f64, current: f64) -> Result<(), Box<dyn Error>> {
-    let calc = ((current / target_ratio).floor()) * target_ratio;
+fn calc_best(target_ratio: f64, current: f64) -> Result<(), Box<dyn Error>> {
+    let floor = (current / target_ratio).floor();
+    let calc = floor * target_ratio;
 
     let whole = calc as i64;
-    println!("{}", whole);
+    println!("Best: {} Ratio: {}", whole, floor);
 
     let mut clipboard = arboard::Clipboard::new()?;
     clipboard.set_text(whole.to_string())?;
