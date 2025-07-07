@@ -1,5 +1,3 @@
-use std::{env::set_current_dir, num::ParseFloatError};
-
 use clap::{Parser, Subcommand};
 
 #[derive(Parser)]
@@ -26,5 +24,12 @@ fn main() {
 }
 
 fn calc_floor(target_ratio: f64, current: f64) {
-    todo!()
+    let calc = ((current / target_ratio).floor()) * target_ratio;
+
+    if target_ratio.fract() != 0.0 {
+        let whole = calc as i64;
+        println!("{}", whole)
+    } else {
+        println!("{}", calc)
+    }
 }
