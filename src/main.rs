@@ -29,7 +29,5 @@ fn calc_floor(target_ratio: f64, current: f64) {
     if target_ratio.fract() != 0.0 {
         let whole = calc as i64;
         println!("{}", whole)
-    } else {
-        println!("{}", calc)
     }
 }
