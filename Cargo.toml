@@ -6,3 +6,8 @@ edition = "2021"
 [dependencies]
 arboard = "3.6.0"
 clap = { version = "4.5.40", features = ["derive"] }
+
+
+[[bin]]
+name = "pou"
+path = "src/main.rs"
