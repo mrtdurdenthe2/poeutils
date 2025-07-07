@@ -1,4 +1,6 @@
+use arboard::Clipboard;
 use clap::{Parser, Subcommand};
+use std::error::Error;
 
 #[derive(Parser)]
 #[command(author, version, about)]
@@ -12,7 +14,7 @@ enum Command {
     Floor { target_ratio: f64, current: f64 },
 }
 
-fn main() {
+fn main() -> Result<(), Box<dyn Error>> {
     let cli = Cli::parse();
 
     match cli.command {
@@ -23,11 +25,13 @@ fn main() {
     }
 }
 
-fn calc_floor(target_ratio: f64, current: f64) {
+fn calc_floor(target_ratio: f64, current: f64) -> Result<(), Box<dyn Error>> {
     let calc = ((current / target_ratio).floor()) * target_ratio;
 
-    if target_ratio.fract() != 0.0 {
-        let whole = calc as i64;
-        println!("{}", whole)
-    }
+    let whole = calc as i64;
+    println!("{}", whole);
+
+    let mut clipboard = arboard::Clipboard::new()?;
+    clipboard.set_text(whole.to_string())?;
+    Ok(())
 }
